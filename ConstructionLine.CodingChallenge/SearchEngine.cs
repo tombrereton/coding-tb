@@ -85,15 +85,20 @@ namespace ConstructionLine.CodingChallenge
             foreach (var color in Color.All)
             {
                 colorCounts[color] = new ColorCount {Color = color, Count = 0};
+                if (_shirtsByColor.ContainsKey(color))
+                {
+                    var shirtsByOneColor = _shirtsByColor[color];
+                    var colorCount = new ColorCount {Count = shirtsByOneColor.Count, Color = color};
+                    if (shirtsBySize.Any())
+                    {
+                        var filteredShirtsByOneColor = shirtsByOneColor.Intersect(shirtsBySize);
+                        colorCount = new ColorCount {Count = filteredShirtsByOneColor.Count(), Color = color};
+                    }
+
+                    colorCounts[color] = colorCount;
+                }
             }
 
-            foreach (var color in options.Colors)
-            {
-                var shirtsByOneColor = _shirtsByColor[color];
-                var filteredShirtsByOneColor = shirtsByOneColor.Intersect(shirtsBySize);
-                var colorCount = new ColorCount {Count = filteredShirtsByOneColor.Count(), Color = color};
-                colorCounts[color] = colorCount;
-            }
 
             return new SearchResults
             {

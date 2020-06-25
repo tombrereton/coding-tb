@@ -74,6 +74,29 @@ namespace ConstructionLine.CodingChallenge.Tests
             };
             results.SizeCounts.Should().BeEquivalentTo(sizeCounts);
         }
+        
+        [Test]
+        public void ShouldReturnCorrectColorCountsWithOnlySizeOption()
+        {
+            var shirts = new List<Shirt>
+            {
+                new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
+                new Shirt(Guid.NewGuid(), "Black - Small", Size.Small, Color.Black),
+            };
+            var searchEngine = new SearchEngine(shirts);
+            var searchOptions = new SearchOptions {Sizes = new List<Size> {Size.Small}};
+
+            var results = searchEngine.Search(searchOptions);
+            var colorCounts = new List<ColorCount>()
+            {
+                new ColorCount {Count = 1, Color = Color.Black},
+                new ColorCount {Count = 1, Color = Color.Red},
+                new ColorCount {Count = 0, Color = Color.Blue},
+                new ColorCount {Count = 0, Color = Color.White},
+                new ColorCount {Count = 0, Color = Color.Yellow},
+            };
+            results.ColorCounts.Should().BeEquivalentTo(colorCounts);
+        }
 
         [Test]
         public void ShouldHaveSameSizeCounts()
