@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ConstructionLine.CodingChallenge
 {
@@ -19,6 +20,24 @@ namespace ConstructionLine.CodingChallenge
         public Size Size { get; set; }
 
         public int Count { get; set; }
+
+        protected bool Equals(SizeCount other)
+        {
+            return Equals(Size, other.Size) && Count == other.Count;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((SizeCount) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Size, Count);
+        }
     }
 
 
@@ -27,5 +46,23 @@ namespace ConstructionLine.CodingChallenge
         public Color Color { get; set; }
 
         public int Count { get; set; }
+
+        protected bool Equals(ColorCount other)
+        {
+            return Equals(Color, other.Color) && Count == other.Count;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((ColorCount) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Color, Count);
+        }
     }
 }

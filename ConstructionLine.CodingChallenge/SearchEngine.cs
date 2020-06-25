@@ -36,6 +36,7 @@ namespace ConstructionLine.CodingChallenge
 
         public SearchResults Search(SearchOptions options)
         {
+            // shirts
             var shirtsBySize = new List<Shirt>();
             var shirtsByColor = new List<Shirt>();
             foreach (var size in options.Sizes)
@@ -57,9 +58,29 @@ namespace ConstructionLine.CodingChallenge
                 shirts = shirtsBySize.Intersect(shirtsByColor).ToList();
             }
             
+            // size counts
+            var sizeCounts = new List<SizeCount>();
+            foreach (var size in options.Sizes)
+            {
+                var count = _shirtBySize[size].Count;
+                var sizeCount = new SizeCount{Count = count, Size = size};
+                sizeCounts.Add(sizeCount);
+            }
+            
+            // color counts
+            var colorCounts = new List<ColorCount>();
+            foreach (var color in options.Colors)
+            {
+                var count = _shirtsByColor[color].Count;
+                var colorCount = new ColorCount{Count = count, Color = color};
+                colorCounts.Add(colorCount);
+            }
+            
             return new SearchResults
             {
-               Shirts =  shirts
+               Shirts =  shirts,
+               SizeCounts = sizeCounts,
+               ColorCounts = colorCounts
             };
         }
     }

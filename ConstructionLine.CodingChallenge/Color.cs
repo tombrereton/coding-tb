@@ -32,5 +32,23 @@ namespace ConstructionLine.CodingChallenge
                 White,
                 Black
             };
+
+        protected bool Equals(Color other)
+        {
+            return Id.Equals(other.Id) && Name == other.Name;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Color) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name);
+        }
     }
 }
