@@ -62,42 +62,48 @@ namespace ConstructionLine.CodingChallenge
             }
 
             // size counts
+            var sizeLookup = shirts.ToLookup(s => s.Size);
             var sizeCounts = new Dictionary<Size, SizeCount>();
             foreach (var size in Size.All)
             {
                 sizeCounts[size] = new SizeCount {Size = size, Count = 0};
-                if (_shirtBySize.ContainsKey(size))
+                if (sizeLookup.Contains(size))
                 {
-                    var shirtsByOneSize = _shirtBySize[size];
-                    var sizeCount = new SizeCount {Count = shirtsByOneSize.Count, Size = size};
-                    if (shirtsByColor.Any())
-                    {
-                        var filteredShirtsByOneSize = shirtsByOneSize.Intersect(shirtsByColor);
-                        sizeCount = new SizeCount {Count = filteredShirtsByOneSize.Count(), Size = size};
-                    }
-
-                    sizeCounts[size] = sizeCount;
+                    var count = sizeLookup[size].Count();
+                    sizeCounts[size] = new SizeCount {Size = size, Count = count};
                 }
             }
 
             // color counts
+            var groupByColor = shirts.ToLookup(shirt => shirt.Color);
             var colorCounts = new Dictionary<Color, ColorCount>();
             foreach (var color in Color.All)
             {
                 colorCounts[color] = new ColorCount {Color = color, Count = 0};
-                if (_shirtsByColor.ContainsKey(color))
+                if (groupByColor.Contains(color))
                 {
-                    var shirtsByOneColor = _shirtsByColor[color];
-                    var colorCount = new ColorCount {Count = shirtsByOneColor.Count, Color = color};
-                    if (shirtsBySize.Any())
-                    {
-                        var filteredShirtsByOneColor = shirtsByOneColor.Intersect(shirtsBySize);
-                        colorCount = new ColorCount {Count = filteredShirtsByOneColor.Count(), Color = color};
-                    }
-
-                    colorCounts[color] = colorCount;
+                    var count = groupByColor[color].Count();
+                    colorCounts[color] = new ColorCount {Color = color, Count = count};
                 }
             }
+
+
+            // foreach (var color in Color.All)
+            // {
+            //     colorCounts[color] = new ColorCount {Color = color, Count = 0};
+            //     if (_shirtsByColor.ContainsKey(color))
+            //     {
+            //         var shirtsByOneColor = _shirtsByColor[color];
+            //         var colorCount = new ColorCount {Count = shirtsByOneColor.Count, Color = color};
+            //         if (shirtsBySize.Any())
+            //         {
+            //             var filteredShirtsByOneColor = shirtsByOneColor.Intersect(shirtsBySize);
+            //             colorCount = new ColorCount {Count = filteredShirtsByOneColor.Count(), Color = color};
+            //         }
+            //
+            //         colorCounts[color] = colorCount;
+            //     }
+            // }
 
 
             return new SearchResults
