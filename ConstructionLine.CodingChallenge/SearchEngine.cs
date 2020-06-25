@@ -21,13 +21,13 @@ namespace ConstructionLine.CodingChallenge
                 if (!_shirtBySize.TryAdd(shirt.Size, new List<Shirt> {shirt}))
                 {
                     var existingList = _shirtBySize[shirt.Size];
-                    existingList.Append(shirt);
+                    existingList.Add(shirt);
                     _shirtBySize[shirt.Size] = existingList;
                 }
                 if (!_shirtsByColor.TryAdd(shirt.Color, new List<Shirt> {shirt}))
                 {
                     var existingList = _shirtsByColor[shirt.Color];
-                    existingList.Append(shirt);
+                    existingList.Add(shirt);
                     _shirtsByColor[shirt.Color] = existingList;
                 }
             }
