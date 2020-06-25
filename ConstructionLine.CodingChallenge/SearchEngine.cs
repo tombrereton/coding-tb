@@ -62,8 +62,9 @@ namespace ConstructionLine.CodingChallenge
             var sizeCounts = new List<SizeCount>();
             foreach (var size in options.Sizes)
             {
-                var count = _shirtBySize[size].Count;
-                var sizeCount = new SizeCount{Count = count, Size = size};
+                var shirtsByOneSize  = _shirtBySize[size];
+                var filteredShirtsByOneSize = shirtsByOneSize.Intersect(shirtsByColor);
+                var sizeCount = new SizeCount{Count = filteredShirtsByOneSize.Count(), Size = size};
                 sizeCounts.Add(sizeCount);
             }
             
@@ -71,8 +72,9 @@ namespace ConstructionLine.CodingChallenge
             var colorCounts = new List<ColorCount>();
             foreach (var color in options.Colors)
             {
-                var count = _shirtsByColor[color].Count;
-                var colorCount = new ColorCount{Count = count, Color = color};
+                var shirtsByOneColor = _shirtsByColor[color];
+                var filteredShirtsByOneColor = shirtsByOneColor.Intersect(shirtsBySize);
+                var colorCount = new ColorCount{Count = filteredShirtsByOneColor.Count(), Color = color};
                 colorCounts.Add(colorCount);
             }
             

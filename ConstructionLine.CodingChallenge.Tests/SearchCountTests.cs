@@ -12,14 +12,14 @@ namespace ConstructionLine.CodingChallenge.Tests
         [Test]
         public void ShouldReturnCorrectSmallCount()
         {
-            var smallRedShirt = new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red);
             var shirts = new List<Shirt>
             {
-                smallRedShirt,
-                new Shirt(Guid.NewGuid(), "Red - Medium", Size.Medium, Color.Black),
+                new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
+                new Shirt(Guid.NewGuid(), "Black - Small", Size.Small, Color.Black),
             };
             var searchEngine = new SearchEngine(shirts);
-            var searchOptions = new SearchOptions {Sizes = new List<Size> {Size.Small}};
+            var searchOptions = new SearchOptions
+                {Sizes = new List<Size> {Size.Small}, Colors = new List<Color> {Color.Red}};
 
             var results = searchEngine.Search(searchOptions);
 
@@ -35,7 +35,7 @@ namespace ConstructionLine.CodingChallenge.Tests
 
             expectedSizeCount.Should().Be(expectedSizeCount2);
         }
-        
+
         [Test]
         public void ShouldHaveDifferentSizeCounts()
         {
@@ -44,7 +44,7 @@ namespace ConstructionLine.CodingChallenge.Tests
 
             expectedSizeCount.Should().NotBe(expectedSizeCount2);
         }
-        
+
         [Test]
         public void ShouldHaveSameColorCounts()
         {
@@ -53,7 +53,7 @@ namespace ConstructionLine.CodingChallenge.Tests
 
             expectedColorCount.Should().Be(expectedColorCount2);
         }
-        
+
         [Test]
         public void ShouldHaveDifferentColorCounts()
         {
