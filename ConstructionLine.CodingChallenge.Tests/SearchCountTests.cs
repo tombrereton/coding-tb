@@ -23,8 +23,56 @@ namespace ConstructionLine.CodingChallenge.Tests
 
             var results = searchEngine.Search(searchOptions);
 
-            var expectedSizeCount = new SizeCount {Count = 1, Size = Size.Small};
-            results.SizeCounts.Single().Should().Be(expectedSizeCount);
+            var sizeCounts = new List<SizeCount>()
+            {
+                new SizeCount {Count = 1, Size = Size.Small},
+                new SizeCount {Count = 0, Size = Size.Medium},
+                new SizeCount {Count = 0, Size = Size.Large}
+            };
+            results.SizeCounts.Should().BeEquivalentTo(sizeCounts);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectMediumCount()
+        {
+            var shirts = new List<Shirt>
+            {
+                new Shirt(Guid.NewGuid(), "Red - Medium", Size.Medium, Color.Red),
+                new Shirt(Guid.NewGuid(), "Black - Small", Size.Small, Color.Black),
+            };
+            var searchEngine = new SearchEngine(shirts);
+            var searchOptions = new SearchOptions
+                {Sizes = new List<Size> {Size.Medium}, Colors = new List<Color> {Color.Red}};
+
+            var results = searchEngine.Search(searchOptions);
+            var sizeCounts = new List<SizeCount>()
+            {
+                new SizeCount {Count = 0, Size = Size.Small},
+                new SizeCount {Count = 1, Size = Size.Medium},
+                new SizeCount {Count = 0, Size = Size.Large}
+            };
+            results.SizeCounts.Should().BeEquivalentTo(sizeCounts);
+        }
+
+        [Test]
+        public void ShouldReturnCorrectSizeCountsWithOnlyColorOption()
+        {
+            var shirts = new List<Shirt>
+            {
+                new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
+                new Shirt(Guid.NewGuid(), "Red - Medium", Size.Medium, Color.Red),
+            };
+            var searchEngine = new SearchEngine(shirts);
+            var searchOptions = new SearchOptions {Colors = new List<Color> {Color.Red}};
+
+            var results = searchEngine.Search(searchOptions);
+            var sizeCounts = new List<SizeCount>()
+            {
+                new SizeCount {Count = 1, Size = Size.Small},
+                new SizeCount {Count = 1, Size = Size.Medium},
+                new SizeCount {Count = 0, Size = Size.Large}
+            };
+            results.SizeCounts.Should().BeEquivalentTo(sizeCounts);
         }
 
         [Test]
