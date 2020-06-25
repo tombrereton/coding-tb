@@ -28,12 +28,20 @@ namespace ConstructionLine.CodingChallenge
         {
             var shirtsBySize = new List<Shirt>();
             var shirtsByColor = new List<Shirt>();
-            var shirts = _shirtsByColor[options.Colors.First()];
-            
+            foreach (var size in options.Sizes)
+            {
+                shirtsBySize.AddRange(_shirtBySize[size]);
+            }
+            foreach (var color in options.Colors)
+            {
+                shirtsByColor.AddRange(_shirtsByColor[color]);
+            }
+
+            var shirts = shirtsByColor.Intersect(shirtsByColor);
             
             return new SearchResults
             {
-               Shirts =  shirts
+               Shirts =  shirts.ToList()
             };
         }
     }

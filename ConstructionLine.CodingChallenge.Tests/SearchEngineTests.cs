@@ -54,7 +54,26 @@ namespace ConstructionLine.CodingChallenge.Tests
 
             var results = searchEngine.Search(searchOptions);
             
-            results.Shirts.Single().Should().BeEquivalentTo(smallRedShirt);
+            results.Shirts.Single().Should().Be(smallRedShirt);
+        }
+
+        [Test]
+        public void ShouldBeEqualShirts()
+        {
+            var newGuid = Guid.NewGuid();
+            var smallRedShirt = new Shirt(newGuid, "Red - Small", Size.Small, Color.Red);
+            var smallRedShirt2 = new Shirt(newGuid, "Red - Small", Size.Small, Color.Red);
+
+            smallRedShirt.Should().Be(smallRedShirt2);
+        }
+        
+        [Test]
+        public void ShouldNotBeEqualShirts()
+        {
+            var smallRedShirt = new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red);
+            var smallRedShirtDifferent = new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red);
+
+            smallRedShirt.Should().NotBe(smallRedShirtDifferent);
         }
     }
 }

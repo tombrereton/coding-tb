@@ -19,5 +19,28 @@ namespace ConstructionLine.CodingChallenge
             Size = size;
             Color = color;
         }
+
+        protected bool Equals(Shirt other)
+        {
+            return Id.Equals(other.Id) && string.Equals(Name, other.Name, StringComparison.InvariantCulture) && Equals(Size, other.Size) && Equals(Color, other.Color);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Shirt) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(Id);
+            hashCode.Add(Name, StringComparer.InvariantCulture);
+            hashCode.Add(Size);
+            hashCode.Add(Color);
+            return hashCode.ToHashCode();
+        }
     }
 }
