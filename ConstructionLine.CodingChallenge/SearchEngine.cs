@@ -18,8 +18,18 @@ namespace ConstructionLine.CodingChallenge
             
             foreach (var shirt in shirts)
             {
-                _shirtBySize.TryAdd(shirt.Size, new List<Shirt> {shirt});
-                _shirtsByColor.TryAdd(shirt.Color, new List<Shirt> {shirt});
+                if (!_shirtBySize.TryAdd(shirt.Size, new List<Shirt> {shirt}))
+                {
+                    var existingList = _shirtBySize[shirt.Size];
+                    existingList.Append(shirt);
+                    _shirtBySize[shirt.Size] = existingList;
+                }
+                if (!_shirtsByColor.TryAdd(shirt.Color, new List<Shirt> {shirt}))
+                {
+                    var existingList = _shirtsByColor[shirt.Color];
+                    existingList.Append(shirt);
+                    _shirtsByColor[shirt.Color] = existingList;
+                }
             }
         }
 
@@ -37,11 +47,19 @@ namespace ConstructionLine.CodingChallenge
                 shirtsByColor.AddRange(_shirtsByColor[color]);
             }
 
-            var shirts = shirtsByColor.Intersect(shirtsByColor);
+            var shirts = shirtsBySize;
+            if (!shirtsBySize.Any())
+            {
+                shirts = shirtsByColor;
+            }
+            if (shirtsBySize.Any() && shirtsByColor.Any())
+            {
+                shirts = shirtsBySize.Intersect(shirtsByColor).ToList();
+            }
             
             return new SearchResults
             {
-               Shirts =  shirts.ToList()
+               Shirts =  shirts
             };
         }
     }

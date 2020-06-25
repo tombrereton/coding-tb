@@ -42,19 +42,38 @@ namespace ConstructionLine.CodingChallenge.Tests
             var shirts = new List<Shirt>
             {
                 smallRedShirt,
-                new Shirt(Guid.NewGuid(), "Black - Medium", Size.Medium, Color.Black),
+                new Shirt(Guid.NewGuid(), "Red - Medium", Size.Medium, Color.Black),
             };
             var searchEngine = new SearchEngine(shirts);
-
-
-            var searchOptions = new SearchOptions
-            {
-                Colors = new List<Color> {Color.Red},
-            };
+            var searchOptions = new SearchOptions {Colors = new List<Color> {Color.Red}};
 
             var results = searchEngine.Search(searchOptions);
-            
+
             results.Shirts.Single().Should().Be(smallRedShirt);
+        }
+        
+        [Test]
+        public void ShouldReturnAllRedShirts()
+        {
+            var shirts = new List<Shirt>
+            {
+                new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
+                new Shirt(Guid.NewGuid(), "Red - Medium", Size.Medium, Color.Red),
+                new Shirt(Guid.NewGuid(), "Black - Medium", Size.Small, Color.Black),
+            };
+            
+            var expected = new List<Shirt>
+            {
+                new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
+                new Shirt(Guid.NewGuid(), "Red - Medium", Size.Medium, Color.Red),
+            };
+            
+            var searchEngine = new SearchEngine(shirts);
+            var searchOptions = new SearchOptions {Colors = new List<Color> {Color.Red}};
+
+            var results = searchEngine.Search(searchOptions);
+
+            results.Shirts.Should().Equal(expected);
         }
 
         [Test]
@@ -66,7 +85,7 @@ namespace ConstructionLine.CodingChallenge.Tests
 
             smallRedShirt.Should().Be(smallRedShirt2);
         }
-        
+
         [Test]
         public void ShouldNotBeEqualShirts()
         {
