@@ -12,10 +12,9 @@ namespace ConstructionLine.CodingChallenge.Tests
         [Test]
         public void ShouldReturnSmallRedShirt()
         {
-            var smallRedShirt = new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red);
             var shirts = new List<Shirt>
             {
-                smallRedShirt,
+                new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
                 new Shirt(Guid.NewGuid(), "Red - Medium", Size.Medium, Color.Black),
             };
             var searchEngine = new SearchEngine(shirts);
@@ -23,7 +22,7 @@ namespace ConstructionLine.CodingChallenge.Tests
 
             var results = searchEngine.Search(searchOptions);
 
-            results.Shirts.Single().Should().Be(smallRedShirt);
+            AssertResults(results.Shirts, searchOptions);
         }
 
         [Test]
@@ -34,13 +33,12 @@ namespace ConstructionLine.CodingChallenge.Tests
                 new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
                 new Shirt(Guid.NewGuid(), "Red - Medium", Size.Medium, Color.Red),
             };
-
             var searchEngine = new SearchEngine(shirts);
             var searchOptions = new SearchOptions {Colors = new List<Color> {Color.Red}};
 
             var results = searchEngine.Search(searchOptions);
 
-            results.Shirts.Should().Equal(shirts);
+            AssertResults(results.Shirts, searchOptions);
         }
 
         [Test]
@@ -51,31 +49,29 @@ namespace ConstructionLine.CodingChallenge.Tests
                 new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
                 new Shirt(Guid.NewGuid(), "Black - Small", Size.Small, Color.Black),
             };
-
             var searchEngine = new SearchEngine(shirts);
             var searchOptions = new SearchOptions {Colors = new List<Color> {Color.Red, Color.Black}};
 
             var results = searchEngine.Search(searchOptions);
 
-            results.Shirts.Should().Equal(shirts);
+            AssertResults(results.Shirts, searchOptions);
         }
 
         [Test]
         public void ShouldReturnAllSmallShirts()
         {
-            var expected = new List<Shirt>
+            var shirts = new List<Shirt>
             {
                 new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
                 new Shirt(Guid.NewGuid(), "Black - Small", Size.Small, Color.Black),
+                new Shirt(Guid.NewGuid(), "Red - Medium", Size.Medium, Color.Red)
             };
-            var shirts = expected.Append(new Shirt(Guid.NewGuid(), "Red - Medium", Size.Medium, Color.Red));
-
-            var searchEngine = new SearchEngine(shirts.ToList());
-            var searchOptions = new SearchOptions {Sizes = new List<Size>() {Size.Small}};
+            var searchEngine = new SearchEngine(shirts);
+            var searchOptions = new SearchOptions {Sizes = new List<Size> {Size.Small}};
 
             var results = searchEngine.Search(searchOptions);
 
-            results.Shirts.Should().Equal(expected);
+            AssertResults(results.Shirts, searchOptions);
         }
 
         [Test]

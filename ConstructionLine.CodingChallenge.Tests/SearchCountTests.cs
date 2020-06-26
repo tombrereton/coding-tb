@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -22,14 +21,8 @@ namespace ConstructionLine.CodingChallenge.Tests
                 {Sizes = new List<Size> {Size.Small}, Colors = new List<Color> {Color.Red}};
 
             var results = searchEngine.Search(searchOptions);
-
-            var sizeCounts = new List<SizeCount>()
-            {
-                new SizeCount {Count = 1, Size = Size.Small},
-                new SizeCount {Count = 0, Size = Size.Medium},
-                new SizeCount {Count = 0, Size = Size.Large}
-            };
-            results.SizeCounts.Should().BeEquivalentTo(sizeCounts);
+            
+            AssertSizeCounts(shirts, searchOptions, results.SizeCounts);
         }
 
         [Test]
@@ -45,13 +38,8 @@ namespace ConstructionLine.CodingChallenge.Tests
                 {Sizes = new List<Size> {Size.Medium}, Colors = new List<Color> {Color.Red}};
 
             var results = searchEngine.Search(searchOptions);
-            var sizeCounts = new List<SizeCount>()
-            {
-                new SizeCount {Count = 0, Size = Size.Small},
-                new SizeCount {Count = 1, Size = Size.Medium},
-                new SizeCount {Count = 0, Size = Size.Large}
-            };
-            results.SizeCounts.Should().BeEquivalentTo(sizeCounts);
+            
+            AssertSizeCounts(shirts, searchOptions, results.SizeCounts);
         }
 
         [Test]
@@ -66,13 +54,8 @@ namespace ConstructionLine.CodingChallenge.Tests
             var searchOptions = new SearchOptions {Colors = new List<Color> {Color.Red}};
 
             var results = searchEngine.Search(searchOptions);
-            var sizeCounts = new List<SizeCount>()
-            {
-                new SizeCount {Count = 1, Size = Size.Small},
-                new SizeCount {Count = 1, Size = Size.Medium},
-                new SizeCount {Count = 0, Size = Size.Large}
-            };
-            results.SizeCounts.Should().BeEquivalentTo(sizeCounts);
+            
+            AssertSizeCounts(shirts, searchOptions, results.SizeCounts);
         }
         
         [Test]
@@ -87,15 +70,8 @@ namespace ConstructionLine.CodingChallenge.Tests
             var searchOptions = new SearchOptions {Sizes = new List<Size> {Size.Small}};
 
             var results = searchEngine.Search(searchOptions);
-            var colorCounts = new List<ColorCount>()
-            {
-                new ColorCount {Count = 1, Color = Color.Black},
-                new ColorCount {Count = 1, Color = Color.Red},
-                new ColorCount {Count = 0, Color = Color.Blue},
-                new ColorCount {Count = 0, Color = Color.White},
-                new ColorCount {Count = 0, Color = Color.Yellow},
-            };
-            results.ColorCounts.Should().BeEquivalentTo(colorCounts);
+            
+            AssertColorCounts(shirts, searchOptions, results.ColorCounts);
         }
 
         [Test]
