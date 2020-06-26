@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace ConstructionLine.CodingChallenge.Tests
@@ -126,7 +124,7 @@ namespace ConstructionLine.CodingChallenge.Tests
             var smallRedShirt = new Shirt(newGuid, "Red - Small", Size.Small, Color.Red);
             var smallRedShirt2 = new Shirt(newGuid, "Red - Small", Size.Small, Color.Red);
 
-            smallRedShirt.Should().Be(smallRedShirt2);
+            Assert.That(smallRedShirt, Is.EqualTo(smallRedShirt2));
         }
 
         [Test]
@@ -135,7 +133,7 @@ namespace ConstructionLine.CodingChallenge.Tests
             var smallRedShirt = new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red);
             var smallRedShirtDifferent = new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red);
 
-            smallRedShirt.Should().NotBe(smallRedShirtDifferent);
+            Assert.That(smallRedShirt, Is.Not.EqualTo(smallRedShirtDifferent));
         }
     }
 }

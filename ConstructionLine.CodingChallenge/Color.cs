@@ -35,7 +35,7 @@ namespace ConstructionLine.CodingChallenge
 
         protected bool Equals(Color other)
         {
-            return Id.Equals(other.Id) && Name == other.Name;
+            return Id.Equals(other.Id);
         }
 
         public override bool Equals(object obj)

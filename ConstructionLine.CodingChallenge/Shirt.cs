@@ -22,7 +22,7 @@ namespace ConstructionLine.CodingChallenge
 
         protected bool Equals(Shirt other)
         {
-            return Id.Equals(other.Id) && string.Equals(Name, other.Name, StringComparison.InvariantCulture) && Equals(Size, other.Size) && Equals(Color, other.Color);
+            return Id.Equals(other.Id);
         }
 
         public override bool Equals(object obj)

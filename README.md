@@ -2,7 +2,7 @@
 Time ranges between 2-5 milliseconds
 
 # Code Coverage
-97% code coverage
+92% code coverage
 
 Note, excluding GetHashCodeMethod
 

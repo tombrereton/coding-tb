@@ -31,7 +31,7 @@ namespace ConstructionLine.CodingChallenge
 
         protected bool Equals(Size other)
         {
-            return Id.Equals(other.Id) && Name == other.Name;
+            return Id.Equals(other.Id);
         }
 
         public override bool Equals(object obj)
