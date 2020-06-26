@@ -19,25 +19,25 @@ namespace ConstructionLine.CodingChallenge
 
         public SearchResults Search(SearchOptions options)
         {
-            var shirtsBySize = GetShirtsBySize(options);
-            var shirtsByColor = GetShirtByColor(options);
-            var shirts = GetShirtsBySizeAndColor(shirtsBySize, shirtsByColor);
+            var shirtsBySize = GetShirtsBySize(options.Sizes);
+            var shirtsByColor = GetShirtByColor(options.Colors);
+            var filteredShirts = GetShirtsBySizeAndColor(shirtsBySize, shirtsByColor);
 
-            var sizeCounts = GetSizeCounts(shirts);
-            var colorCounts = GetColorCounts(shirts);
+            var sizeCounts = GetSizeCounts(filteredShirts);
+            var colorCounts = GetColorCounts(filteredShirts);
 
             return new SearchResults
             {
-                Shirts = shirts,
+                Shirts = filteredShirts,
                 SizeCounts = sizeCounts,
                 ColorCounts = colorCounts
             };
         }
 
-        private List<Shirt> GetShirtsBySize(SearchOptions options)
+        private List<Shirt> GetShirtsBySize(IEnumerable<Size> sizes)
         {
             var shirtsBySize = new List<Shirt>();
-            foreach (var size in options.Sizes)
+            foreach (var size in sizes)
             {
                 shirtsBySize.AddRange(_shirtBySize[size]);
             }
@@ -45,10 +45,10 @@ namespace ConstructionLine.CodingChallenge
             return shirtsBySize;
         }
 
-        private List<Shirt> GetShirtByColor(SearchOptions options)
+        private List<Shirt> GetShirtByColor(IEnumerable<Color> colors)
         {
             var shirtsByColor = new List<Shirt>();
-            foreach (var color in options.Colors)
+            foreach (var color in colors)
             {
                 shirtsByColor.AddRange(_shirtsByColor[color]);
             }
