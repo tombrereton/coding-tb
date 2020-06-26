@@ -36,7 +36,8 @@ namespace ConstructionLine.CodingChallenge.Tests
 
             var results = _searchEngine.Search(options);
 
-            // Note I would measure performance in clock ticks not milliseconds as this varies between computers
+            // Around 2-3 milliseconds
+            // Alternatively, performance could be measured in clock ticks not milliseconds
             sw.Stop();
             Console.WriteLine($"Test fixture finished in {sw.ElapsedMilliseconds} milliseconds");
 
@@ -58,7 +59,6 @@ namespace ConstructionLine.CodingChallenge.Tests
 
             var results = _searchEngine.Search(options);
 
-            // Note I would measure performance in clock ticks not milliseconds as this varies between computers
             sw.Stop();
             Console.WriteLine($"Test fixture finished in {sw.ElapsedMilliseconds} milliseconds");
 

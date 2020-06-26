@@ -19,6 +19,8 @@ namespace ConstructionLine.CodingChallenge
 
         public SearchResults Search(SearchOptions options)
         {
+            ValidateSearchOptionParameters(options);
+
             var shirtsBySize = GetShirtsBySize(options.Sizes);
             var shirtsByColor = GetShirtByColor(options.Colors);
             var filteredShirts = GetShirtsBySizeAndColor(shirtsBySize, shirtsByColor);
@@ -32,6 +34,24 @@ namespace ConstructionLine.CodingChallenge
                 SizeCounts = sizeCounts,
                 ColorCounts = colorCounts
             };
+        }
+
+        private static void ValidateSearchOptionParameters(SearchOptions options)
+        {
+            if (options == null)
+            {
+                throw new ArgumentException("SearchOptions cannot be null");
+            }
+
+            if (options.Colors == null)
+            {
+                throw new ArgumentException("Colors cannot be null, omit or provide a value");
+            }
+
+            if (options.Sizes == null)
+            {
+                throw new ArgumentException("Sizes cannot be null, omit or provide a value");
+            }
         }
 
         private List<Shirt> GetShirtsBySize(IEnumerable<Size> sizes)

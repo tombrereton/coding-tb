@@ -73,6 +73,51 @@ namespace ConstructionLine.CodingChallenge.Tests
 
             AssertResults(results.Shirts, searchOptions);
         }
+        
+        [Test]
+        public void ShouldThrowArgumentExceptionForNullSearchOption()
+        {
+            var shirts = new List<Shirt>
+            {
+                new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
+            };
+            
+            var searchEngine = new SearchEngine(shirts);
+            SearchOptions searchOptions = null;
+
+            var exception = Assert.Throws<ArgumentException>(() => searchEngine.Search(searchOptions));
+            Assert.That(exception.Message, Is.EqualTo("SearchOptions cannot be null"));
+        }
+        
+        [Test]
+        public void ShouldThrowArgumentExceptionForColorOption()
+        {
+            var shirts = new List<Shirt>
+            {
+                new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
+            };
+            
+            var searchEngine = new SearchEngine(shirts);
+            SearchOptions searchOptions = new SearchOptions{Colors = null};
+
+            var exception = Assert.Throws<ArgumentException>(() => searchEngine.Search(searchOptions));
+            Assert.That(exception.Message, Is.EqualTo("Colors cannot be null, omit or provide a value"));
+        }
+        
+        [Test]
+        public void ShouldThrowArgumentExceptionForSizeOption()
+        {
+            var shirts = new List<Shirt>
+            {
+                new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
+            };
+            
+            var searchEngine = new SearchEngine(shirts);
+            SearchOptions searchOptions = new SearchOptions{Sizes = null};
+
+            var exception = Assert.Throws<ArgumentException>(() => searchEngine.Search(searchOptions));
+            Assert.That(exception.Message, Is.EqualTo("Sizes cannot be null, omit or provide a value"));
+        }
 
         [Test]
         public void ShouldBeEqualShirts()
