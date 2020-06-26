@@ -35,12 +35,7 @@ namespace ConstructionLine.CodingChallenge
 
         public override int GetHashCode()
         {
-            var hashCode = new HashCode();
-            hashCode.Add(Id);
-            hashCode.Add(Name, StringComparer.InvariantCulture);
-            hashCode.Add(Size);
-            hashCode.Add(Color);
-            return hashCode.ToHashCode();
+            return HashCode.Combine(Id);
         }
     }
 }

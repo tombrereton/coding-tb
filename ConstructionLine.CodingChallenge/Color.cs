@@ -48,7 +48,7 @@ namespace ConstructionLine.CodingChallenge
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Name);
+            return HashCode.Combine(Id);
         }
     }
 }
